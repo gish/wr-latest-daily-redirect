@@ -4,11 +4,13 @@ const axios = require('axios');
 const qs = require('qs');
 const R = require('ramda');
 const dotenv = require('dotenv');
+const packagejson = require('./package.json');
 
 dotenv.config();
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const USER_AGENT = `nodejs:${packagejson.name}:${packagejson.version} (by /u/murrtu)`;
 
 const getAccessToken = R.pipeP(
   (username, password) =>
@@ -20,6 +22,7 @@ const getAccessToken = R.pipeP(
         username,
         password,
       },
+      headers: {'User-Agent': USER_AGENT},
     }),
   R.path(['data', 'access_token']),
 );
@@ -29,7 +32,10 @@ const getNewPosts = R.pipeP(
     axios({
       method: 'get',
       url: 'https://oauth.reddit.com/r/weightroom/',
-      headers: {Authorization: 'bearer ' + accessToken},
+      headers: {
+        Authorization: 'bearer ' + accessToken,
+        'User-Agent': USER_AGENT,
+      },
     }),
   R.path(['data', 'data', 'children']),
 );
@@ -58,7 +64,7 @@ const getDaily = async () => {
 
 app.get('/', async (req, res) => {
   try {
-    daily = getDaily();
+    const daily = await getDaily();
     res
       .status(301)
       .set('Location', daily)
@@ -70,5 +76,4 @@ app.get('/', async (req, res) => {
       .end();
   }
 });
-
 app.listen(8080);
