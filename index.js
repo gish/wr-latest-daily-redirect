@@ -10,6 +10,7 @@ dotenv.config();
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const PORT = process.env.PORT;
 const USER_AGENT = `nodejs:${packagejson.name}:${packagejson.version} (by /u/murrtu)`;
 
 const getAccessToken = R.pipeP(
@@ -76,4 +77,4 @@ app.get('/', async (req, res) => {
       .end();
   }
 });
-app.listen(8080);
+app.listen(PORT);
