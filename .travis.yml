@@ -4,4 +4,4 @@ node_js:
 jobs:
   include:
     - stage: release
-      script: yarn semantic release
+      script: yarn semantic-release
