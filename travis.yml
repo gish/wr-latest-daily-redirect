@@ -1,0 +1,4 @@
+jobs:
+  include:
+    - stage: release
+      script: yarn semantic release
