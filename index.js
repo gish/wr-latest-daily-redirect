@@ -66,7 +66,7 @@ app.get('/', async (req, res) => {
   try {
     const daily = await getDaily();
     res
-      .status(301)
+      .status(302)
       .set('Location', daily)
       .end();
   } catch (e) {
