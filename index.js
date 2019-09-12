@@ -12,6 +12,7 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const PORT = process.env.PORT;
 const USER_AGENT = `nodejs:${packagejson.name}:${packagejson.version} (by /u/murrtu)`;
+const PINTIFIER_KEY = process.env.PINTIFIER_KEY;
 
 const getAccessToken = R.pipeP(
   (username, password) =>
@@ -63,9 +64,21 @@ const getDaily = async () => {
   }
 };
 
+const logVisit = dailyUrl =>
+  axios({
+    method: 'GET',
+    url: 'https://pintifier.herokuapp.com/api/v1/notification',
+    params: {
+      key: PINTIFIER_KEY,
+      domain: USER_AGENT,
+      payload: JSON.stringify({url: dailyUrl}),
+    },
+  });
+
 app.get('/', async (req, res) => {
   try {
     const daily = await getDaily();
+    logVisit(daily);
     res
       .status(302)
       .set('Location', daily)
