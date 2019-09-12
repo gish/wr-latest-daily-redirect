@@ -84,6 +84,7 @@ app.get('/', async (req, res) => {
       .set('Location', daily)
       .end();
   } catch (e) {
+    console.error(e.message);
     res
       .status(501)
       .send('Error: ' + e.message)
