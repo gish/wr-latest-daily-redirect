@@ -64,21 +64,21 @@ const getDaily = async () => {
   }
 };
 
-const logVisit = dailyUrl =>
+const logVisit = (dailyUrl, userAgent) =>
   axios({
     method: 'GET',
     url: 'https://pintifier.herokuapp.com/api/v1/notification',
     params: {
       key: PINTIFIER_KEY,
       domain: USER_AGENT,
-      payload: JSON.stringify({url: dailyUrl}),
+      payload: JSON.stringify({url: dailyUrl, ua: userAgent}),
     },
   });
 
 app.get('/', async (req, res) => {
   try {
     const daily = await getDaily();
-    logVisit(daily);
+    logVisit(daily, req.get('User-Agent'));
     res
       .status(302)
       .set('Location', daily)
