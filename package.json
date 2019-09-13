@@ -19,15 +19,22 @@
         }
       ],
       "@semantic-release/github",
-      ["@semantic-release/git", {
-        "assets": ["package.json", "CHANGELOG.md"],
-        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
-      }]
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "CHANGELOG.md"
+          ],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ]
     ]
   },
   "dependencies": {
     "@semantic-release/changelog": "^3.0.4",
     "@semantic-release/exec": "^3.3.6",
+    "@semantic-release/git": "^7.0.16",
     "axios": "^0.19.0",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
