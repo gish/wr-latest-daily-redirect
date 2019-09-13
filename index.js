@@ -13,6 +13,12 @@ const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const PORT = process.env.PORT;
 const USER_AGENT = `nodejs:${packagejson.name}:${packagejson.version} (by /u/murrtu)`;
 const PINTIFIER_KEY = process.env.PINTIFIER_KEY;
+const CACHE_AGE = 2 * 60 * 1e3;
+
+let cache = {
+  timestampUtc: 0,
+  url: '',
+};
 
 const getAccessToken = R.pipeP(
   (username, password) =>
@@ -43,25 +49,40 @@ const getNewPosts = R.pipeP(
 );
 
 const findLatestDaily = R.pipe(
-  R.find(
+  R.filter(
     R.pipe(
       R.path(['data', 'title']),
       R.test(/daily/i),
     ),
   ),
-  R.path(['data', 'url']),
+  R.head,
 );
 
+const isCacheValid = R.pipe(
+  R.path(['timestampUtc']),
+  timestamp => timestamp + CACHE_AGE,
+  timestamp => timestamp > Date.now(),
+);
+
+const updateCache = dailyPost =>
+  (cache = {
+    timestampUtc: Date.now(),
+    url: R.path(['data', 'url'])(dailyPost),
+  });
+
 const getDaily = async () => {
-  try {
-    return R.pipeP(
+  const getCachedDaily = R.path(['url']);
+  const getFreshDaily = async () =>
+    R.pipeP(
       await getAccessToken,
       await getNewPosts,
       findLatestDaily,
+      R.tap(updateCache),
+      R.path(['data', 'url']),
     )(CLIENT_ID, CLIENT_SECRET);
-  } catch (e) {
-    throw e;
-  }
+
+  const dailyUrl = R.ifElse(isCacheValid, getCachedDaily, getFreshDaily)(cache);
+  return dailyUrl;
 };
 
 const logVisit = (dailyUrl, userAgent) =>
@@ -78,13 +99,13 @@ const logVisit = (dailyUrl, userAgent) =>
 app.get('/', async (req, res) => {
   try {
     const daily = await getDaily();
-    logVisit(daily, req.get('User-Agent'));
+    //    logVisit(daily, req.get('User-Agent'));
     res
       .status(302)
       .set('Location', daily)
       .end();
   } catch (e) {
-    console.error(e.message);
+    console.error(e);
     res
       .status(501)
       .send('Error: ' + e.message)
