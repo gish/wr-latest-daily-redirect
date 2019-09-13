@@ -99,7 +99,7 @@ const logVisit = (dailyUrl, userAgent) =>
 app.get('/', async (req, res) => {
   try {
     const daily = await getDaily();
-    //    logVisit(daily, req.get('User-Agent'));
+    logVisit(daily, req.get('User-Agent'));
     res
       .status(302)
       .set('Location', daily)
