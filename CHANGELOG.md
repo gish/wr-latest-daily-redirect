@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.1.3...v1.2.0) (2019-09-17)
+
+
+### Features
+
+* shorten response time ([21c70eb](https://github.com/gish/wr-latest-daily-redirect/commit/21c70eb))
+
 ## [1.1.3](https://github.com/gish/wr-latest-daily-redirect/compare/v1.1.2...v1.1.3) (2019-09-13)
 
 
