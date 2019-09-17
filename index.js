@@ -70,20 +70,20 @@ const updateCache = dailyPost =>
     url: R.path(['data', 'url'])(dailyPost),
   });
 
-const getDaily = async () => {
-  const getCachedDaily = R.path(['url']);
-  const getFreshDaily = async () =>
+const addDailyToCache = async (clientId, clientSecret) => {
+  try {
     R.pipeP(
       await getAccessToken,
       await getNewPosts,
       findLatestDaily,
       R.tap(updateCache),
-      R.path(['data', 'url']),
-    )(CLIENT_ID, CLIENT_SECRET);
-
-  const dailyUrl = R.ifElse(isCacheValid, getCachedDaily, getFreshDaily)(cache);
-  return dailyUrl;
+    )(clientId, clientSecret);
+  } catch (e) {
+    console.error(e);
+  }
 };
+
+const getDailyFromCache = () => R.path(['url'])(cache);
 
 const logVisit = (dailyUrl, userAgent) =>
   axios({
@@ -96,9 +96,12 @@ const logVisit = (dailyUrl, userAgent) =>
     },
   });
 
-app.get('/', async (req, res) => {
+setInterval(() => addDailyToCache(CLIENT_ID, CLIENT_SECRET), 1 * 60 * 1e3);
+addDailyToCache(CLIENT_ID, CLIENT_SECRET);
+
+app.get('/', (req, res) => {
   try {
-    const daily = await getDaily();
+    const daily = getDailyFromCache(CLIENT_ID, CLIENT_SECRET);
     logVisit(daily, req.get('User-Agent'));
     res
       .status(302)
