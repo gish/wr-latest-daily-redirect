@@ -83,7 +83,7 @@ const addDailyToCache = async (clientId, clientSecret) => {
   }
 };
 
-const getDailyFromCache = () => R.path(['url'])(cache);
+const getDailyFromCache = R.path(['url']);
 
 const logVisit = (dailyUrl, userAgent) =>
   axios({
@@ -101,7 +101,7 @@ addDailyToCache(CLIENT_ID, CLIENT_SECRET);
 
 app.get('/', (req, res) => {
   try {
-    const daily = getDailyFromCache();
+    const daily = getDailyFromCache(cache);
     logVisit(daily, req.get('User-Agent'));
     res
       .status(302)
