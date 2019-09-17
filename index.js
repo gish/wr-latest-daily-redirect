@@ -101,7 +101,7 @@ addDailyToCache(CLIENT_ID, CLIENT_SECRET);
 
 app.get('/', (req, res) => {
   try {
-    const daily = getDailyFromCache(CLIENT_ID, CLIENT_SECRET);
+    const daily = getDailyFromCache();
     logVisit(daily, req.get('User-Agent'));
     res
       .status(302)
