@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.2.0...v1.3.0) (2019-09-24)
+
+
+### Features
+
+* cache redirect url ([660e083](https://github.com/gish/wr-latest-daily-redirect/commit/660e083))
+
 # [1.2.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.1.3...v1.2.0) (2019-09-17)
 
 
