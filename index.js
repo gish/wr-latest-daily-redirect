@@ -15,10 +15,23 @@ const USER_AGENT = `nodejs:${packagejson.name}:${packagejson.version} (by /u/mur
 const PINTIFIER_KEY = process.env.PINTIFIER_KEY;
 const CACHE_AGE = 23 * 60 * 60 * 1e3;
 
-let cache = {
-  timestampUtc: 0,
-  url: '',
+const createCache = () => {
+  let storage = {
+    timestampUtc: 0,
+    url: '',
+  };
+
+  return {
+    get: R.always(storage),
+    update: url =>
+      (storage = {
+        timestampUtc: Date.now(),
+        url,
+      }),
+  };
 };
+
+const cache = createCache();
 
 const getAccessToken = R.pipeP(
   (username, password) =>
@@ -58,20 +71,18 @@ const findLatestDaily = R.pipe(
   R.head,
 );
 
-const updateCache = url =>
-  (cache = {
-    timestampUtc: Date.now(),
-    url,
-  });
-
-const addDailyToCache = async (clientId, clientSecret, cache) => {
+const addDailyToCache = async (clientId, clientSecret) => {
   try {
     R.pipeP(
       await getAccessToken,
       await getNewPosts,
       findLatestDaily,
       R.path(['data', 'url']),
-      R.ifElse(R.equals(getDailyFromCache(cache)), R.identity, updateCache),
+      R.ifElse(
+        R.equals(getDailyFromCache(cache.get())),
+        R.identity,
+        cache.update,
+      ),
     )(clientId, clientSecret);
   } catch (e) {
     console.error(e);
@@ -91,16 +102,13 @@ const logVisit = (dailyUrl, userAgent) =>
     },
   });
 
-setInterval(
-  () => addDailyToCache(CLIENT_ID, CLIENT_SECRET, cache),
-  1 * 60 * 1e3,
-);
-addDailyToCache(CLIENT_ID, CLIENT_SECRET, cache);
+setInterval(() => addDailyToCache(CLIENT_ID, CLIENT_SECRET), 1 * 60 * 1e3);
+addDailyToCache(CLIENT_ID, CLIENT_SECRET);
 
 app.get('/', (req, res) => {
   try {
-    const daily = getDailyFromCache(cache);
-    const cacheTimestamp = R.path(['timestampUtc'], cache);
+    const daily = getDailyFromCache(cache.get());
+    const cacheTimestamp = R.path(['timestampUtc'], cache.get());
     logVisit(daily, req.get('User-Agent'));
     res
       .append(
