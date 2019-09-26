@@ -22,7 +22,7 @@ const createCache = () => {
   };
 
   return {
-    get: R.always(storage),
+    get: () => storage,
     update: url =>
       (storage = {
         timestampUtc: Date.now(),
