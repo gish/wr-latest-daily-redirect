@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/gish/wr-latest-daily-redirect/compare/v1.3.0...v1.3.1) (2019-09-26)
+
+
+### Bug Fixes
+
+* always return latest cache object ([e9516b2](https://github.com/gish/wr-latest-daily-redirect/commit/e9516b2))
+
 # [1.3.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.2.0...v1.3.0) (2019-09-24)
 
 
