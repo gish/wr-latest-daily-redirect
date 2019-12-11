@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.4.0...v1.5.0) (2019-12-11)
+
+
+### Features
+
+* make brower forever cache old WR URL ([a300ba0](https://github.com/gish/wr-latest-daily-redirect/commit/a300ba07ca7d3ca665c07454580f08192e2b02f3))
+
 # [1.4.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.3.1...v1.4.0) (2019-12-11)
 
 
