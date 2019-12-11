@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.3.1...v1.4.0) (2019-12-11)
+
+
+### Features
+
+* support fitness subreddit ([2744c08](https://github.com/gish/wr-latest-daily-redirect/commit/2744c081a9a433fb19fa09cf2514bd4bc02244bd))
+
 ## [1.3.1](https://github.com/gish/wr-latest-daily-redirect/compare/v1.3.0...v1.3.1) (2019-09-26)
 
 
