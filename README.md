@@ -8,3 +8,4 @@
 - CLIENT_SECRET: Reddit API secret
 - PORT: Exposed port
 - PINTIFIER_KEY: App key for Pintifier
+- ORIGIN: Protocol and hostname (e g _http://localhost/_)
