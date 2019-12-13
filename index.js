@@ -155,7 +155,7 @@ app.get('/r/:subreddit', (req, res) => {
 app.get('/', (_, res) => {
   res
     .status(301)
-    .set('Location', `${ORIGIN}:${PORT}/r/weightroom`)
+    .set('Location', `${ORIGIN}/r/weightroom`)
     .end();
 });
 
