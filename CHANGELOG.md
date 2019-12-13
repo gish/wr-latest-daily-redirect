@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/gish/wr-latest-daily-redirect/compare/v1.5.0...v1.5.1) (2019-12-13)
+
+
+### Bug Fixes
+
+* redirect to accessible origin ([2bcd8fa](https://github.com/gish/wr-latest-daily-redirect/commit/2bcd8fa83f1189259d3b2abf9612bd8ac47b1aa6))
+
 # [1.5.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.4.0...v1.5.0) (2019-12-11)
 
 
