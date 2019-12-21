@@ -41,6 +41,6 @@
     "prettier": "^1.19.1",
     "qs": "^6.9.1",
     "ramda": "^0.26.1",
-    "semantic-release": "^15.13.31"
+    "semantic-release": "^15.14.0"
   }
 }
