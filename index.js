@@ -15,7 +15,7 @@ const ORIGIN = process.env.ORIGIN;
 const USER_AGENT = `nodejs:${packagejson.name}:${packagejson.version} (by /u/murrtu)`;
 const PINTIFIER_KEY = process.env.PINTIFIER_KEY;
 const CACHE_AGE = 23 * 60 * 60 * 1e3;
-const SUBREDDITS = ['weightroom', 'fitness'];
+const SUBREDDITS = ['bodybuilding', 'fitness', 'weightroom'];
 
 const createCache = () => {
   let storage = SUBREDDITS.reduce(
