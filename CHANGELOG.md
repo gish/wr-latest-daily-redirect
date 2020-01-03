@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.5.1...v1.6.0) (2020-01-03)
+
+
+### Features
+
+* add bodybuilding sub ([0895dec](https://github.com/gish/wr-latest-daily-redirect/commit/0895dec46c2905128c6a9d379ea9dffb3cca5de2))
+
 ## [1.5.1](https://github.com/gish/wr-latest-daily-redirect/compare/v1.5.0...v1.5.1) (2019-12-13)
 
 
