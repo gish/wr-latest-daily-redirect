@@ -73,15 +73,11 @@ const getNewPosts = subreddit =>
     R.path(['data', 'data', 'children']),
   );
 
-const findLatestDaily = R.pipe(
-  R.filter(
-    R.pipe(
-      R.path(['data', 'title']),
-      R.test(/daily/i),
-    ),
-  ),
-  R.head,
-);
+const findLatestDaily = posts => {
+  const titleMatch = R.pipe(R.path(['data', 'title']), R.test(/daily/i));
+  const selfMatch = R.pipe(R.path(['data', 'is_self']), R.equals(true));
+  return R.pipe(R.filter(selfMatch), R.filter(titleMatch), R.head)(posts);
+};
 
 const addDailyToCache = subreddit => async (clientId, clientSecret) => {
   try {
