@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/gish/wr-latest-daily-redirect/compare/v1.6.0...v1.6.1) (2020-02-29)
+
+
+### Bug Fixes
+
+* consider self posts only ([f2c037d](https://github.com/gish/wr-latest-daily-redirect/commit/f2c037dfc411fbc67b16e8131a16b439c3ac7f09))
+
 # [1.6.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.5.1...v1.6.0) (2020-01-03)
 
 
