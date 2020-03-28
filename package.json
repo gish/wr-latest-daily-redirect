@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start": "ts-node index.ts"
   },
   "release": {
     "ci": false,
@@ -32,15 +32,31 @@
     ]
   },
   "dependencies": {
-    "@semantic-release/changelog": "^5.0.0",
-    "@semantic-release/exec": "^5.0.0",
-    "@semantic-release/git": "^9.0.0",
+    "@types/express": "^4.17.2",
+    "@types/node": "^13.7.7",
+    "@types/qs": "^6.9.1",
+    "@types/ramda": "^0.26.43",
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "prettier": "^2.0.2",
     "qs": "^6.9.1",
     "ramda": "^0.27.0",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^5.0.0",
+    "@semantic-release/exec": "^5.0.0",
+    "@semantic-release/git": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-typescript": "^7.0.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^2.0.2",
     "semantic-release": "^17.0.4"
   }
 }
