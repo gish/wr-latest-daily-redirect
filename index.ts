@@ -109,17 +109,6 @@ const getDailyFromCache = (subreddit: CachedSubreddit): string => subreddit.url;
 const getTimestampfromCache = (subreddit: CachedSubreddit): number =>
   subreddit.timestampUtc;
 
-const logVisit = (subreddit: string, dailyUrl: string, userAgent: string) =>
-  axios({
-    method: "GET",
-    url: "https://pintifier.herokuapp.com/api/v1/notification",
-    params: {
-      key: PINTIFIER_KEY,
-      domain: USER_AGENT,
-      payload: JSON.stringify({ subreddit, url: dailyUrl, ua: userAgent }),
-    },
-  });
-
 SUBREDDITS.map((subreddit) => {
   setInterval(
     () => addDailyToCache(subreddit)(CLIENT_ID, CLIENT_SECRET),
@@ -138,7 +127,6 @@ app.get("/r/:subreddit", (req: Request, res: Response) => {
     const daily = getDailyFromCache(cachedSubreddit);
     const cacheTimestamp = getTimestampfromCache(cachedSubreddit);
     const userAgent = R.defaultTo("", req.get("User-Agent"));
-    logVisit(subreddit, daily, userAgent);
     res
       .append(
         "Cache-Control",
