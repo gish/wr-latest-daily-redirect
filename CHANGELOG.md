@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.6.1...v1.7.0) (2020-10-23)
+
+
+### Features
+
+* remove logging ([dbb6e4a](https://github.com/gish/wr-latest-daily-redirect/commit/dbb6e4a85c94e5a853619dcf34a2c4c39e80b4f1))
+
 ## [1.6.1](https://github.com/gish/wr-latest-daily-redirect/compare/v1.6.0...v1.6.1) (2020-02-29)
 
 
