@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node index.ts",
-    "build": "tsc --project ./tsconfig.json"
+    "build": "tsc -b"
   },
   "engines": {
     "node": "14"
