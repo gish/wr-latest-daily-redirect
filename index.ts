@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 const app = express();
 import axios from "axios";
 import qs from "qs";
@@ -31,8 +31,8 @@ const createCache = () => {
       ...cache,
       [subreddit]: {
         timestampUtc: 0,
-        url: ""
-      }
+        url: "",
+      },
     }),
     {}
   );
@@ -44,9 +44,9 @@ const createCache = () => {
         ...storage,
         [subreddit]: {
           timestampUtc: Date.now(),
-          url
-        }
-      })
+          url,
+        },
+      }),
   };
 };
 
@@ -59,9 +59,9 @@ const getAccessToken = async (username: string, password: string) => {
     data: qs.stringify({ grant_type: "client_credentials" }),
     auth: {
       username,
-      password
+      password,
     },
-    headers: { "User-Agent": USER_AGENT }
+    headers: { "User-Agent": USER_AGENT },
   });
   return response.data.access_token;
 };
@@ -72,8 +72,8 @@ const getNewPosts = (subreddit: string) => async (accessToken: string) => {
     url: `https://oauth.reddit.com/r/${subreddit}/`,
     headers: {
       Authorization: "bearer " + accessToken,
-      "User-Agent": USER_AGENT
-    }
+      "User-Agent": USER_AGENT,
+    },
   });
   return subredditPosts.data.data.children;
 };
@@ -81,7 +81,7 @@ const getNewPosts = (subreddit: string) => async (accessToken: string) => {
 const findLatestDaily = (posts: RedditPost[]) => {
   const titleMatch = (post: RedditPost) => post.data.title.match(/daily/i);
   const selfMatch = (post: RedditPost) => post.data.is_self;
-  const dailies = posts.filter(post => selfMatch(post) && titleMatch(post));
+  const dailies = posts.filter((post) => selfMatch(post) && titleMatch(post));
   return Promise.resolve(dailies[0]);
 };
 
@@ -116,11 +116,11 @@ const logVisit = (subreddit: string, dailyUrl: string, userAgent: string) =>
     params: {
       key: PINTIFIER_KEY,
       domain: USER_AGENT,
-      payload: JSON.stringify({ subreddit, url: dailyUrl, ua: userAgent })
-    }
+      payload: JSON.stringify({ subreddit, url: dailyUrl, ua: userAgent }),
+    },
   });
 
-SUBREDDITS.map(subreddit => {
+SUBREDDITS.map((subreddit) => {
   setInterval(
     () => addDailyToCache(subreddit)(CLIENT_ID, CLIENT_SECRET),
     1 * 60 * 1e3
@@ -128,7 +128,7 @@ SUBREDDITS.map(subreddit => {
   addDailyToCache(subreddit)(CLIENT_ID, CLIENT_SECRET);
 });
 
-app.get("/r/:subreddit", (req: express.Request, res: express.Response) => {
+app.get("/r/:subreddit", (req: Request, res: Response) => {
   try {
     const subreddit = req.params.subreddit;
     if (!SUBREDDITS.includes(subreddit)) {
@@ -157,10 +157,7 @@ app.get("/r/:subreddit", (req: express.Request, res: express.Response) => {
 });
 
 app.get("/", (_: express.Request, res: express.Response) => {
-  res
-    .status(301)
-    .set("Location", `${ORIGIN}/r/weightroom`)
-    .end();
+  res.status(301).set("Location", `${ORIGIN}/r/weightroom`).end();
 });
 
 app.listen(PORT);
