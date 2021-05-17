@@ -13,9 +13,19 @@ jobs:
     steps:
       - name: Cloning repo
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Push to dokku
         uses: dokku/github-action@master
         with:
           git_push_flags: "--force"
           git_remote_url: "ssh://dokku@${{ secrets.DOKKU_HOST }}:22/wr-latest-daily"
           ssh_private_key: ${{ secrets.SSH_KEY }}
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: #logs
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_TITLE: wr-latest-daily deployment
+          MSG_MINIMAL: commit
