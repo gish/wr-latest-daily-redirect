@@ -21,7 +21,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/www/wr-latest-daily-redirect
-            git pull --force origin main
+            git pull --force origin master
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
