@@ -27,6 +27,9 @@ jobs:
           script: |
             cd ~/www/wr-latest-daily-redirect
             git pull --force origin master
+            npm install
+            npm run build
+            pm2 restart wr-latest-daily-redirect
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
