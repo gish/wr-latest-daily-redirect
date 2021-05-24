@@ -7,6 +7,11 @@ on:
     branches:
       - master
   workflow_dispatch:
+  workflow_run:
+    workflows: ["merge-pr"]
+    branches: [master]
+    types:
+      - completed
 
 jobs:
   deploy:
