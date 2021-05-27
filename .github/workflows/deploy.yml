@@ -33,7 +33,8 @@ jobs:
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             cd ~/www/wr-latest-daily-redirect
-            git pull --force origin master
+            git fetch origin
+            git reset --hard origin/master
             npm install
             npm run build
             pm2 restart wr-latest-daily-redirect
