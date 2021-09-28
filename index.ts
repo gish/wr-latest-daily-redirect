@@ -85,25 +85,23 @@ const findLatestDaily = (posts: RedditPost[]) => {
   return Promise.resolve(dailies[0]);
 };
 
-const addDailyToCache = (subreddit: string) => async (
-  clientId: string,
-  clientSecret: string
-) => {
-  try {
-    const accessToken = await getAccessToken(clientId, clientSecret);
-    const newPosts = await getNewPosts(subreddit)(accessToken);
-    const latestDaily = await findLatestDaily(newPosts);
-    const url = latestDaily.data.url;
-    const cachedDaily = getDailyFromCache(cache.get(subreddit));
-    if (url === cachedDaily) {
+const addDailyToCache =
+  (subreddit: string) => async (clientId: string, clientSecret: string) => {
+    try {
+      const accessToken = await getAccessToken(clientId, clientSecret);
+      const newPosts = await getNewPosts(subreddit)(accessToken);
+      const latestDaily = await findLatestDaily(newPosts);
+      const url = latestDaily.data.url;
+      const cachedDaily = getDailyFromCache(cache.get(subreddit));
+      if (url === cachedDaily) {
+        return url;
+      }
+      cache.update(subreddit)(url);
       return url;
+    } catch (e) {
+      console.error(e);
     }
-    cache.update(subreddit)(url);
-    return url;
-  } catch (e) {
-    console.error(e);
-  }
-};
+  };
 
 const getDailyFromCache = (subreddit: CachedSubreddit): string => subreddit.url;
 const getTimestampfromCache = (subreddit: CachedSubreddit): number =>
@@ -126,7 +124,6 @@ app.get("/r/:subreddit", (req: Request, res: Response) => {
     const cachedSubreddit = cache.get(subreddit);
     const daily = getDailyFromCache(cachedSubreddit);
     const cacheTimestamp = getTimestampfromCache(cachedSubreddit);
-    const userAgent = R.defaultTo("", req.get("User-Agent"));
     res
       .append(
         "Cache-Control",
@@ -137,10 +134,13 @@ app.get("/r/:subreddit", (req: Request, res: Response) => {
       .end();
   } catch (e) {
     console.error(e);
-    res
-      .status(501)
-      .send("Error: " + e.message)
-      .end();
+    if (axios.isAxiosError(e)) {
+      return res
+        .status(501)
+        .send("Error: " + e.message)
+        .end();
+    }
+    return res.sendStatus(500);
   }
 });
 
