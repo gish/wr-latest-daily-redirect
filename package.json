@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@types/express": "4.17.13",
-    "@types/node": "^16.11.4",
+    "@types/node": "^16.11.5",
     "@types/qs": "^6.9.7",
     "@types/ramda": "^0.27.45",
     "axios": "^0.21.4",
