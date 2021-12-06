@@ -53,7 +53,7 @@
     "@semantic-release/exec": "^6.0.2",
     "@semantic-release/git": "^10.0.1",
     "@types/express-serve-static-core": "^4.17.26",
-    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/eslint-plugin": "^5.6.0",
     "@typescript-eslint/parser": "^4.33.0",
     "eslint": "^8.4.0",
     "eslint-config-airbnb-typescript": "^16.1.0",
