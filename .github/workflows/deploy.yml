@@ -22,6 +22,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Build
         run: npm ci && npm run build --if-present
+      - name: Deploy
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        run:
+          - doctl serverless install
+            doctl serverless deploy .
       - name: Notify about deployment
         uses: rtCamp/action-slack-notify@v2
         env:
