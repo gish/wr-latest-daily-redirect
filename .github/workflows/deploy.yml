@@ -29,9 +29,7 @@ jobs:
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       - name: Deploy
-        run:
-          - doctl serverless install
-            doctl serverless deploy .
+        run: doctl serverless install && doctl serverless deploy .
       - name: Notify about deployment
         uses: rtCamp/action-slack-notify@v2
         env:
