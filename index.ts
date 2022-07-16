@@ -1,8 +1,5 @@
-import express, { Request, Response } from "express";
-const app = express();
 import axios from "axios";
 import qs from "qs";
-import R from "ramda";
 import dotenv from "dotenv";
 import packagejson from "./package.json";
 
@@ -10,9 +7,6 @@ dotenv.config();
 
 const CLIENT_ID = process.env.CLIENT_ID ?? "";
 const CLIENT_SECRET = process.env.CLIENT_SECRET ?? "";
-const PORT = process.env.PORT ?? "";
-const ORIGIN = process.env.ORIGIN ?? "";
-const PINTIFIER_KEY = process.env.PINTIFIER_KEY ?? "";
 const USER_AGENT = `nodejs:${packagejson.name}:${packagejson.version} (by /u/murrtu)`;
 const CACHE_AGE = 23 * 60 * 60 * 1e3;
 const SUBREDDITS = ["bodybuilding", "fitness", "weightroom"];
@@ -85,67 +79,40 @@ const findLatestDaily = (posts: RedditPost[]) => {
   return Promise.resolve(dailies[0]);
 };
 
-const addDailyToCache =
-  (subreddit: string) => async (clientId: string, clientSecret: string) => {
-    try {
-      const accessToken = await getAccessToken(clientId, clientSecret);
-      const newPosts = await getNewPosts(subreddit)(accessToken);
-      const latestDaily = await findLatestDaily(newPosts);
-      const url = latestDaily.data.url;
-      const cachedDaily = getDailyFromCache(cache.get(subreddit));
-      if (url === cachedDaily) {
-        return url;
-      }
-      cache.update(subreddit)(url);
-      return url;
-    } catch (e) {
-      console.error(e);
-    }
-  };
+const getDailyUrl = async (
+  subreddit: string,
+  clientId: string,
+  clientSecret: string
+) => {
+  const accessToken = await getAccessToken(clientId, clientSecret);
+  const newPosts = await getNewPosts(subreddit)(accessToken);
+  const latestDaily = await findLatestDaily(newPosts);
+  const url = latestDaily.data.url;
+  return url;
+};
 
-const getDailyFromCache = (subreddit: CachedSubreddit): string => subreddit.url;
-const getTimestampfromCache = (subreddit: CachedSubreddit): number =>
-  subreddit.timestampUtc;
-
-SUBREDDITS.map((subreddit) => {
-  setInterval(
-    () => addDailyToCache(subreddit)(CLIENT_ID, CLIENT_SECRET),
-    1 * 60 * 1e3
-  );
-  addDailyToCache(subreddit)(CLIENT_ID, CLIENT_SECRET);
-});
-
-app.get("/r/:subreddit", (req: Request, res: Response) => {
+async function main(args: any) {
   try {
-    const subreddit = req.params.subreddit;
+    console.log(process.env);
+    const subreddit = args.subreddit ?? "weightroom";
     if (!SUBREDDITS.includes(subreddit)) {
       throw new Error(`Subreddit /r/${subreddit} not supported`);
     }
-    const cachedSubreddit = cache.get(subreddit);
-    const daily = getDailyFromCache(cachedSubreddit);
-    const cacheTimestamp = getTimestampfromCache(cachedSubreddit);
-    res
-      .append(
-        "Cache-Control",
-        `max-age=${Math.floor((cacheTimestamp + CACHE_AGE - Date.now()) / 1e3)}`
-      )
-      .status(302)
-      .set("Location", daily)
-      .end();
+    const url = await getDailyUrl("weightroom", CLIENT_ID, CLIENT_SECRET);
+    return {
+      headers: {
+        location: url,
+      },
+      statusCode: 302,
+    };
   } catch (e) {
     console.error(e);
     if (axios.isAxiosError(e)) {
-      return res
-        .status(501)
-        .send("Error: " + e.message)
-        .end();
+      return {
+        statusCode: 501,
+        body: e.message,
+      };
     }
-    return res.sendStatus(500);
+    return { statusCode: 500 };
   }
-});
-
-app.get("/", (_: express.Request, res: express.Response) => {
-  res.status(301).set("Location", `${ORIGIN}/r/weightroom`).end();
-});
-
-app.listen(PORT);
+}
