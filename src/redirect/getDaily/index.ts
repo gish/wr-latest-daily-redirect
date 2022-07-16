@@ -1,9 +1,11 @@
 import axios from "axios";
 import qs from "qs";
 import dotenv from "dotenv";
-import packagejson from "./package.json";
+//import packagejson from "./../../../package.json";
 
 dotenv.config();
+
+const packagejson = { name: "wr-latest-daily-redirect", version: "1.7.0" };
 
 const CLIENT_ID = process.env.CLIENT_ID ?? "";
 const CLIENT_SECRET = process.env.CLIENT_SECRET ?? "";
@@ -93,7 +95,6 @@ const getDailyUrl = async (
 
 async function main(args: any) {
   try {
-    console.log(process.env);
     const subreddit = args.subreddit ?? "weightroom";
     if (!SUBREDDITS.includes(subreddit)) {
       throw new Error(`Subreddit /r/${subreddit} not supported`);
