@@ -1,0 +1,9 @@
+packages:
+  - name: redirect
+    environment:
+      CLIENT_ID: ${CLIENT_ID}
+      CLIENT_SECRET: ${CLIENT_SECRET}
+    functions:
+      - name: getDaily
+        runtime: 'nodejs:default'
+        web: true
