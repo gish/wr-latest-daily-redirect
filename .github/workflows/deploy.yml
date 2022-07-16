@@ -24,20 +24,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Build
         run: npm ci && npm run build --if-present
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      - name: Deploy
-        env:
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-        run: doctl serverless install && doctl serverless connect && doctl serverless deploy .
-      - name: Notify about deployment
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_CHANNEL: #logs
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_TITLE: wr-latest-daily deployment
-          MSG_MINIMAL: commit
+      - name: Add package build
+        uses: EndBug/add-and-commit@v9
+        add: 'packages'
+        message: 'Add package build'
