@@ -29,3 +29,4 @@ jobs:
         with:
           add: './packages'
           message: 'chore(build): add package build'
+          push: 'master'
