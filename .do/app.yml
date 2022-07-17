@@ -9,12 +9,12 @@ functions:
     type: SECRET
     value: EV[1:Plfpv3pBqqaWvQ7BrSqPvblkTFJ/pkZa:fQ/2PTdwxyCxyRU+TfLzxDUJV012bMJqMtkvZWk/swgCtZeVeRcLTygptQ==]
   github:
-    branch: master
+    branch: build
     repo: gish/wr-latest-daily-redirect
     deploy_on_push: true
   name: wr-latest-daily-redirect
   routes:
-  - path: /wr-latest-daily-redirect3
+  - path: /wr-latest-daily-redirect
   source_dir: /
 name: wr-latest-daily-redirect
 region: ams
