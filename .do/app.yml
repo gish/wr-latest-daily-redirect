@@ -9,7 +9,7 @@ functions:
     type: SECRET
     value: EV[1:Plfpv3pBqqaWvQ7BrSqPvblkTFJ/pkZa:fQ/2PTdwxyCxyRU+TfLzxDUJV012bMJqMtkvZWk/swgCtZeVeRcLTygptQ==]
   github:
-    branch: build
+    branch: master
     repo: gish/wr-latest-daily-redirect
     deploy_on_push: true
   name: wr-latest-daily-redirect
