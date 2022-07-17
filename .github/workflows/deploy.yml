@@ -27,5 +27,5 @@ jobs:
       - name: Add package build
         uses: EndBug/add-and-commit@v9
         with:
-          add: 'packages'
-          message: 'Add package build'
+          add: './packages'
+          message: 'chore(build): add package build'
