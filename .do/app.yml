@@ -19,7 +19,7 @@ functions:
 name: wr-latest-daily-redirect
 region: ams
 services:
-- dockerfile_path: .do/lb/Dockerfile
+- dockerfile_path: .do/Dockerfile
   github:
     branch: master
     deploy_on_push: true
