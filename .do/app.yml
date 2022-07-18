@@ -18,3 +18,16 @@ functions:
   source_dir: /
 name: wr-latest-daily-redirect
 region: ams
+services:
+- dockerfile_path: .do/lb/Dockerfile
+  github:
+    branch: master
+    deploy_on_push: true
+    repo: gish/wr-latest-daily-redirect
+  http_port: 8080
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  log_destinations:
+  name: lb
+  routes:
+  - path: /
