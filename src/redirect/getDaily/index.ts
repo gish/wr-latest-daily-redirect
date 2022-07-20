@@ -71,6 +71,7 @@ async function main(args: any) {
     if (!SUBREDDITS.includes(subreddit)) {
       throw new Error(`Subreddit /r/${subreddit} not supported`);
     }
+    console.log("Will redirect to ", subreddit);
     const url = await getDailyUrl(subreddit, CLIENT_ID, CLIENT_SECRET);
     return {
       headers: {
