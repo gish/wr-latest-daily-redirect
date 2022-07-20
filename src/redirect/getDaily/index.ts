@@ -71,7 +71,7 @@ async function main(args: any) {
     if (!SUBREDDITS.includes(subreddit)) {
       throw new Error(`Subreddit /r/${subreddit} not supported`);
     }
-    const url = await getDailyUrl("weightroom", CLIENT_ID, CLIENT_SECRET);
+    const url = await getDailyUrl(subreddit, CLIENT_ID, CLIENT_SECRET);
     return {
       headers: {
         location: url,
