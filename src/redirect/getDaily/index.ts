@@ -67,11 +67,11 @@ const getDailyUrl = async (
 async function main(args: any) {
   try {
     const subreddit = args.subreddit ?? "weightroom";
-    console.log("Will redirect to ", subreddit);
     const url = await getDailyUrl(subreddit, CLIENT_ID, CLIENT_SECRET);
     return {
       headers: {
         location: url,
+        "x-subreddit": subreddit,
       },
       statusCode: 302,
     };
