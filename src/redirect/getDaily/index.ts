@@ -10,7 +10,6 @@ const packagejson = { name: "wr-latest-daily-redirect", version: "1.7.0" };
 const CLIENT_ID = process.env.CLIENT_ID ?? "";
 const CLIENT_SECRET = process.env.CLIENT_SECRET ?? "";
 const USER_AGENT = `nodejs:${packagejson.name}:${packagejson.version} (by /u/murrtu)`;
-const SUBREDDITS = ["bodybuilding", "fitness", "weightroom"];
 
 type RedditPost = {
   data: {
@@ -68,9 +67,6 @@ const getDailyUrl = async (
 async function main(args: any) {
   try {
     const subreddit = args.subreddit ?? "weightroom";
-    if (!SUBREDDITS.includes(subreddit)) {
-      throw new Error(`Subreddit /r/${subreddit} not supported`);
-    }
     console.log("Will redirect to ", subreddit);
     const url = await getDailyUrl(subreddit, CLIENT_ID, CLIENT_SECRET);
     return {
