@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -60,28 +49,6 @@ var packagejson = { name: "wr-latest-daily-redirect", version: "1.7.0" };
 var CLIENT_ID = (_a = process.env.CLIENT_ID) !== null && _a !== void 0 ? _a : "";
 var CLIENT_SECRET = (_b = process.env.CLIENT_SECRET) !== null && _b !== void 0 ? _b : "";
 var USER_AGENT = "nodejs:".concat(packagejson.name, ":").concat(packagejson.version, " (by /u/murrtu)");
-var CACHE_AGE = 23 * 60 * 60 * 1e3;
-var SUBREDDITS = ["bodybuilding", "fitness", "weightroom"];
-var createCache = function () {
-    var storage = SUBREDDITS.reduce(function (cache, subreddit) {
-        var _a;
-        return (__assign(__assign({}, cache), (_a = {}, _a[subreddit] = {
-            timestampUtc: 0,
-            url: "",
-        }, _a)));
-    }, {});
-    return {
-        get: function (subreddit) { return storage[subreddit]; },
-        update: function (subreddit) { return function (url) {
-            var _a;
-            return (storage = __assign(__assign({}, storage), (_a = {}, _a[subreddit] = {
-                timestampUtc: Date.now(),
-                url: url,
-            }, _a)));
-        }; },
-    };
-};
-var cache = createCache();
 var getAccessToken = function (username, password) { return __awaiter(void 0, void 0, void 0, function () {
     var response;
     return __generator(this, function (_a) {
@@ -124,7 +91,7 @@ var findLatestDaily = function (posts) {
     var titleMatch = function (post) { return post.data.title.match(/daily/i); };
     var selfMatch = function (post) { return post.data.is_self; };
     var dailies = posts.filter(function (post) { return selfMatch(post) && titleMatch(post); });
-    return Promise.resolve(dailies[0]);
+    return dailies[0];
 };
 var getDailyUrl = function (subreddit, clientId, clientSecret) { return __awaiter(void 0, void 0, void 0, function () {
     var accessToken, newPosts, latestDaily, url;
@@ -153,15 +120,13 @@ function main(args) {
                 case 0:
                     _b.trys.push([0, 2, , 3]);
                     subreddit = (_a = args.subreddit) !== null && _a !== void 0 ? _a : "weightroom";
-                    if (!SUBREDDITS.includes(subreddit)) {
-                        throw new Error("Subreddit /r/".concat(subreddit, " not supported"));
-                    }
-                    return [4 /*yield*/, getDailyUrl("weightroom", CLIENT_ID, CLIENT_SECRET)];
+                    return [4 /*yield*/, getDailyUrl(subreddit, CLIENT_ID, CLIENT_SECRET)];
                 case 1:
                     url = _b.sent();
                     return [2 /*return*/, {
                             headers: {
                                 location: url,
+                                "x-subreddit": subreddit,
                             },
                             statusCode: 302,
                         }];
@@ -174,7 +139,7 @@ function main(args) {
                                 body: e_1.message,
                             }];
                     }
-                    return [2 /*return*/, { statusCode: 500 }];
+                    return [2 /*return*/, { statusCode: 500, body: e_1 }];
                 case 3: return [2 /*return*/];
             }
         });
