@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.10.0...v1.11.0) (2022-07-20)
+
+
+### Features
+
+* add support for more subreddits ([4277737](https://github.com/gish/wr-latest-daily-redirect/commit/4277737d4c45c5b6546166a3396f2e29c052ca2f))
+
 # [1.10.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.9.0...v1.10.0) (2022-07-20)
 
 
