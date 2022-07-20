@@ -10,9 +10,8 @@ const packagejson = { name: "wr-latest-daily-redirect", version: "1.7.0" };
 const CLIENT_ID = process.env.CLIENT_ID ?? "";
 const CLIENT_SECRET = process.env.CLIENT_SECRET ?? "";
 const USER_AGENT = `nodejs:${packagejson.name}:${packagejson.version} (by /u/murrtu)`;
-const CACHE_AGE = 23 * 60 * 60 * 1e3;
 const SUBREDDITS = ["bodybuilding", "fitness", "weightroom"];
-type CachedSubreddit = { timestampUtc: number; url: string };
+
 type RedditPost = {
   data: {
     is_self: boolean;
@@ -20,33 +19,6 @@ type RedditPost = {
     url: string;
   };
 };
-
-const createCache = () => {
-  let storage: { [key: string]: CachedSubreddit } = SUBREDDITS.reduce(
-    (cache, subreddit) => ({
-      ...cache,
-      [subreddit]: {
-        timestampUtc: 0,
-        url: "",
-      },
-    }),
-    {}
-  );
-
-  return {
-    get: (subreddit: string) => storage[subreddit],
-    update: (subreddit: string) => (url: string) =>
-      (storage = {
-        ...storage,
-        [subreddit]: {
-          timestampUtc: Date.now(),
-          url,
-        },
-      }),
-  };
-};
-
-const cache = createCache();
 
 const getAccessToken = async (username: string, password: string) => {
   const response = await axios({
