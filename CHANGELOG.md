@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.9.0...v1.10.0) (2022-07-20)
+
+
+### Features
+
+* respond with custom header with subreddit ([5151f3a](https://github.com/gish/wr-latest-daily-redirect/commit/5151f3a447fcd955ba829bb5f8caa328f0ed6be4))
+
 # [1.9.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.8.0...v1.9.0) (2022-07-20)
 
 
