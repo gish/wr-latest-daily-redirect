@@ -1,3 +1,12 @@
+# [1.8.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.7.0...v1.8.0) (2022-07-20)
+
+
+### Features
+
+* remove cache ([7429537](https://github.com/gish/wr-latest-daily-redirect/commit/7429537a0f67996f7b2af307050b8e7037e26529))
+* return generic error ([5d6bc9e](https://github.com/gish/wr-latest-daily-redirect/commit/5d6bc9ee9ef24646ea8b6c99c142e424ce50d270))
+* support all subreddits ([e940c4a](https://github.com/gish/wr-latest-daily-redirect/commit/e940c4a1dd9046d20b452ce89271fef1f6db9f68))
+
 # [1.7.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.6.1...v1.7.0) (2020-10-23)
 
 
