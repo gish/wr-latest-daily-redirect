@@ -50,7 +50,7 @@ const findLatestDaily = (posts: RedditPost[]) => {
   const titleMatch = (post: RedditPost) => post.data.title.match(/daily/i);
   const selfMatch = (post: RedditPost) => post.data.is_self;
   const dailies = posts.filter((post) => selfMatch(post) && titleMatch(post));
-  return Promise.resolve(dailies[0]);
+  return dailies[0];
 };
 
 const getDailyUrl = async (
