@@ -86,6 +86,6 @@ async function main(args: any) {
         body: e.message,
       };
     }
-    return { statusCode: 500 };
+    return { statusCode: 500, body: e };
   }
 }
