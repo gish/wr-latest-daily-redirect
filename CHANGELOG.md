@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.8.0...v1.9.0) (2022-07-20)
+
+
+### Features
+
+* allow arbitrary subreddit ([b6a8d6f](https://github.com/gish/wr-latest-daily-redirect/commit/b6a8d6f9d1b9216ccc02a5f12500fa9b9be3daaa))
+
 # [1.8.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.7.0...v1.8.0) (2022-07-20)
 
 
