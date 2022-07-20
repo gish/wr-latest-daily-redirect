@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/gish/wr-latest-daily-redirect/compare/v1.11.0...v1.11.1) (2022-07-20)
+
+
+### Bug Fixes
+
+* use correct argument for subreddit ([1d98894](https://github.com/gish/wr-latest-daily-redirect/commit/1d988940ede22e9c4a246b51726cfe75399b6267))
+
 # [1.11.0](https://github.com/gish/wr-latest-daily-redirect/compare/v1.10.0...v1.11.0) (2022-07-20)
 
 
