@@ -1,3 +1,6 @@
+domains:
+- domain: daily.stafre.se
+  type: PRIMARY
 functions:
 - envs:
   - key: CLIENT_ID
@@ -10,8 +13,8 @@ functions:
     value: EV[1:Plfpv3pBqqaWvQ7BrSqPvblkTFJ/pkZa:fQ/2PTdwxyCxyRU+TfLzxDUJV012bMJqMtkvZWk/swgCtZeVeRcLTygptQ==]
   github:
     branch: master
-    repo: gish/wr-latest-daily-redirect
     deploy_on_push: true
+    repo: gish/wr-latest-daily-redirect
   name: redirect
   routes:
   - path: /redirect
@@ -27,7 +30,7 @@ services:
   http_port: 8080
   instance_count: 1
   instance_size_slug: basic-xxs
-  log_destinations:
   name: lb
   routes:
   - path: /
+  - path: /r/weightroom
