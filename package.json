@@ -36,7 +36,7 @@
     ]
   },
   "dependencies": {
-    "@types/node": "^18.7.15",
+    "@types/node": "^18.7.16",
     "@types/qs": "^6.9.7",
     "axios": "^0.27.2",
     "dotenv": "^16.0.2",
